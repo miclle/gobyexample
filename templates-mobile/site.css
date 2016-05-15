@@ -120,6 +120,7 @@ div.docs p {
     font-style: italic;
 }
 div.code {
+    overflow-x: auto;
     padding-top: 5px;
     padding-right: 5px;
     padding-left: 5px;
