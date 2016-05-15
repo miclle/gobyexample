@@ -2,6 +2,7 @@ package main
 
 import (
     "crypto/sha1"
+    "encoding/json"
     "fmt"
     "io/ioutil"
     "net/http"
@@ -16,7 +17,7 @@ import (
 )
 
 var cacheDir = "/tmp/gobyexample-cache"
-var siteDir = "./public-json"
+var siteDir = "./public-mobile"
 var pygmentizeBin = "./vendor/pygments/pygmentize"
 
 func check(err error) {
@@ -125,10 +126,22 @@ type Seg struct {
 }
 
 type Example struct {
-    Id, Name                    string
+    Id                          string
+    Name                        string
     GoCode, GoCodeHash, UrlHash string
     Segs                        [][]*Seg
     NextExample                 *Example
+}
+
+type Index struct {
+    Id   string `json:"id"`
+    Name string `json:"name"`
+}
+
+type ExampleIndex struct {
+    Id          string `json:"id"`
+    Name        string `json:"name"`
+    NextExample *Index `json:"next"`
 }
 
 func parseHashFile(sourcePath string) (string, string) {
@@ -258,17 +271,37 @@ func parseExamples() []*Example {
 }
 
 func renderIndex(examples []*Example) {
+
+    eis := []*ExampleIndex{}
+
+    for _, e := range examples {
+        ei := &ExampleIndex{
+            Id:   e.Id,
+            Name: e.Name,
+        }
+        if e.NextExample != nil {
+            ei.NextExample = &Index{e.NextExample.Id, e.NextExample.Name}
+        }
+
+        eis = append(eis, ei)
+    }
+
     indexTmpl := template.New("index")
-    _, err := indexTmpl.Parse(mustReadFile("templates/index-json.tmpl"))
+    _, err := indexTmpl.Parse(mustReadFile("templates-mobile/index.tmpl"))
     check(err)
+
     indexF, err := os.Create(siteDir + "/index.json")
     check(err)
-    indexTmpl.Execute(indexF, examples)
+
+    indexsJson, err := json.Marshal(eis)
+    check(err)
+
+    indexTmpl.Execute(indexF, string(indexsJson))
 }
 
 func renderExamples(examples []*Example) {
     exampleTmpl := template.New("example")
-    _, err := exampleTmpl.Parse(mustReadFile("templates/example.tmpl"))
+    _, err := exampleTmpl.Parse(mustReadFile("templates-mobile/example.tmpl"))
     check(err)
     for _, example := range examples {
         exampleF, err := os.Create(siteDir + "/" + example.Id)
@@ -278,11 +311,11 @@ func renderExamples(examples []*Example) {
 }
 
 func main() {
-    copyFile("templates/site.css", siteDir+"/site.css")
-    copyFile("templates/favicon.ico", siteDir+"/favicon.ico")
-    copyFile("templates/404.html", siteDir+"/404.html")
-    copyFile("templates/play.png", siteDir+"/play.png")
+    copyFile("templates-mobile/site.css", siteDir+"/site.css")
+    copyFile("templates-mobile/favicon.ico", siteDir+"/favicon.ico")
+    copyFile("templates-mobile/404.html", siteDir+"/404.html")
+    copyFile("templates-mobile/play.png", siteDir+"/play.png")
     examples := parseExamples()
     renderIndex(examples)
-    // renderExamples(examples)
+    renderExamples(examples)
 }

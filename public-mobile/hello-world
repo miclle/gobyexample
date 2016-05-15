@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Go by Example: Hello World</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <body>
+    <div class="example" id="hello-world">
+
+      <h2>Hello World</h2>
+
+      
+      <div class="seg">
+        
+          <div class="docs"><p>Our first program will print the classic &ldquo;hello world&rdquo;
+message. Here&rsquo;s the full source code.</p>
+</div>
+          <div class="code leading"><div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+</pre></div>
+</div>
+        
+          <div class="docs"></div>
+          <div class="code leading"><div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+</pre></div>
+</div>
+        
+          <div class="docs"></div>
+          <div class="code"><div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;hello world&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+        
+      </div>
+      
+      <div class="seg">
+        
+          <div class="docs"><p>To run the program, put the code in <code>hello-world.go</code> and
+use <code>go run</code>.</p>
+</div>
+          <div class="code leading"><div class="highlight"><pre><span class="gp">$</span> go run hello-world.go
+<span class="go">hello world</span>
+</pre></div>
+</div>
+        
+          <div class="docs"><p>Sometimes we&rsquo;ll want to build our programs into
+binaries. We can do this using <code>go build</code>.</p>
+</div>
+          <div class="code leading"><div class="highlight"><pre><span class="gp">$</span> go build hello-world.go
+<span class="gp">$</span> ls
+<span class="go">hello-world	hello-world.go</span>
+</pre></div>
+</div>
+        
+          <div class="docs"><p>We can then execute the built binary directly.</p>
+</div>
+          <div class="code leading"><div class="highlight"><pre><span class="gp">$</span> ./hello-world
+<span class="go">hello world</span>
+</pre></div>
+</div>
+        
+          <div class="docs"><p>Now that we can run and build basic Go programs, let&rsquo;s
+learn more about the language.</p>
+</div>
+          <div class="code empty"></div>
+        
+      </div>
+      
+
+      
+      <p class="next">Next example: <a href="values">Values</a></p>
+      
+
+      <p class="footer">
+        <span>
+          by <a href="https://twitter.com/mmcgrana">@mmcgrana</a>
+        </span>
+        <a href="mailto:mmcgrana@gmail.com">feedback</a> |
+        <a href="https://github.com/mmcgrana/gobyexample/blob/master/examples/hello-world">source</a> |
+        <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+
+    </div>
+
+    <script type="text/javascript">
+      if (window.location.host == "gobyexample.com") {
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-34996217-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      }
+    </script>
+  </body>
+</html>

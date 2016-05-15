@@ -4,4 +4,4 @@ set -e
 
 tools/format
 tools/measure
-tools/generate-json
+tools/generate-mobile
